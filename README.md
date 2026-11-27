@@ -4,6 +4,8 @@ Aplikasi pencatatan akuntansi untuk **Dive Center Resto, Nusa Penida**.
 Dibangun dengan **Google Apps Script** dan **Google Sheet** sebagai database.
 Bisa dibuka di HP (portrait & landscape) dan laptop.
 
+**Buka aplikasi:** [https://script.google.com/macros/s/AKfycbxLvv4j-rXGofcjWnm8OhlTLZMAra1ghMC1Wx4FDNiriUm01LyTqynmkm0cYIOjuLtB/exec](https://script.google.com/macros/s/AKfycbxLvv4j-rXGofcjWnm8OhlTLZMAra1ghMC1Wx4FDNiriUm01LyTqynmkm0cYIOjuLtB/exec)
+
 ![POS di laptop](docs/screenshots/04_pos_laptop.png)
 
 ## Fitur

@@ -1,0 +1,16 @@
+{
+  "name": "dc-resto",
+  "version": "1.0.0",
+  "description": "Aplikasi akuntansi Dive Center Resto (Nusa Penida): POS, Jurnal Umum, Buku Besar, Laba Rugi, Neraca. Google Apps Script + Google Sheet.",
+  "private": true,
+  "scripts": {
+    "test": "node test/test.js src/Code.gs",
+    "test:e2e": "node test/e2e.js",
+    "push": "clasp push",
+    "deploy": "clasp push && clasp deploy --description \"update\""
+  },
+  "devDependencies": {
+    "@google/clasp": "^2.4.2",
+    "playwright": "^1.48.0"
+  }
+}

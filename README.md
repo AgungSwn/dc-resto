@@ -4,7 +4,10 @@ Aplikasi pencatatan akuntansi untuk **Dive Center Resto, Nusa Penida**.
 Dibangun dengan **Google Apps Script** dan **Google Sheet** sebagai database.
 Bisa dibuka di HP (portrait & landscape) dan laptop.
 
-**Buka aplikasi:** [https://script.google.com/macros/s/AKfycbxLvv4j-rXGofcjWnm8OhlTLZMAra1ghMC1Wx4FDNiriUm01LyTqynmkm0cYIOjuLtB/exec](https://script.google.com/macros/s/AKfycbxLvv4j-rXGofcjWnm8OhlTLZMAra1ghMC1Wx4FDNiriUm01LyTqynmkm0cYIOjuLtB/exec)
+**Buka aplikasi:** [https://agungswn.github.io/dc-resto/](https://agungswn.github.io/dc-resto/)  
+Alamat langsung (Apps Script): [script.google.com/…/exec](https://script.google.com/macros/s/AKfycbxLvv4j-rXGofcjWnm8OhlTLZMAra1ghMC1Wx4FDNiriUm01LyTqynmkm0cYIOjuLtB/exec)
+
+Di HP, buka alamat GitHub di atas lalu pilih **Tambahkan ke layar utama**: aplikasi muncul dengan ikon logo resto.
 
 ![POS di laptop](docs/screenshots/04_pos_laptop.png)
 
@@ -42,6 +45,8 @@ test/           pengujian
   gasmock.js      simulasi lingkungan Google Apps Script
   e2e.js          uji ujung-ke-ujung di browser (Playwright)
 docs/           panduan pasang dan cuplikan layar
+index.html      pembungkus GitHub Pages (memuat aplikasi Apps Script layar penuh)
+manifest.webmanifest, icon*  ikon & data untuk "Tambahkan ke layar utama"
 ```
 
 ## Pasang

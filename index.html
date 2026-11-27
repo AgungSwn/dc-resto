@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+  <title>Dive Center Resto</title>
+  <meta name="description" content="Aplikasi akuntansi Dive Center Resto, Nusa Penida">
+  <meta name="theme-color" content="#3B4A22">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="DC Resto">
+  <link rel="icon" type="image/svg+xml" href="icon.svg">
+  <link rel="apple-touch-icon" href="icon-180.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <style>
+    html, body { margin: 0; height: 100%; background: #3B4A22; overflow: hidden; }
+    iframe { position: fixed; inset: 0; width: 100%; height: 100%; border: 0; background: #3B4A22; }
+    .splash { position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px;
+      color: #E8E9EB; font-family: Poppins, system-ui, sans-serif; transition: opacity .4s; z-index: 1; pointer-events: none; }
+    .splash img { width: 120px; height: 120px; border-radius: 50%; }
+    .splash.hide { opacity: 0; }
+    .err { display: none; position: fixed; left: 16px; right: 16px; bottom: 24px; background: #fff; color: #2B2F26; border-radius: 12px;
+      padding: 14px 16px; font-family: system-ui, sans-serif; font-size: 14px; z-index: 2; box-shadow: 0 8px 24px rgba(0,0,0,.3); }
+    .err a { color: #556B2F; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <div class="splash" id="splash"><img src="icon-192.png" alt=""><div>Dive Center Resto</div></div>
+  <iframe id="app" title="Dive Center Resto" allow="clipboard-write"
+    src="https://script.google.com/macros/s/AKfycbxLvv4j-rXGofcjWnm8OhlTLZMAra1ghMC1Wx4FDNiriUm01LyTqynmkm0cYIOjuLtB/exec"></iframe>
+  <div class="err" id="err">Aplikasi lambat dimuat? <a href="https://script.google.com/macros/s/AKfycbxLvv4j-rXGofcjWnm8OhlTLZMAra1ghMC1Wx4FDNiriUm01LyTqynmkm0cYIOjuLtB/exec" target="_top">Buka langsung</a></div>
+  <script>
+    var app = document.getElementById('app'), sp = document.getElementById('splash'), err = document.getElementById('err');
+    var t = setTimeout(function () { err.style.display = 'block'; }, 15000);
+    app.addEventListener('load', function () { clearTimeout(t); err.style.display = 'none'; sp.classList.add('hide'); setTimeout(function () { sp.remove(); }, 500); });
+  </script>
+</body>
+</html>

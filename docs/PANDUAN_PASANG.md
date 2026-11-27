@@ -35,7 +35,9 @@ Datanya tersimpan di satu Google Sheet milik resto.
 5. Buka URL itu di HP dan laptop. Di HP, pakai menu browser **Tambahkan ke layar utama**
    agar muncul seperti aplikasi.
 
-Login pertama: **kode `ADM`, PIN `123456`**. Segera ganti PIN lewat tombol akun (kanan atas).
+**Mode pengembangan (saat ini aktif):** aplikasi langsung terbuka tanpa login sebagai Admin. Lewat tombol akun (kanan atas) Anda bisa mencoba tampilan tiap peran. Jurnal yang dibuat di mode ini tercatat dengan OPR `DEV`.
+
+Untuk mengaktifkan login: di `Code.gs` ubah `var TANPA_LOGIN = true;` menjadi `false`, simpan, lalu terbitkan versi baru. Login pertama: **kode `ADM`, PIN `123456`**, lalu segera ganti PIN.
 
 > Setiap kali mengubah kode, terbitkan ulang: **Terapkan → Kelola deployment → ikon pensil →
 > Versi: Versi baru → Terapkan**. URL tetap sama.

@@ -9,6 +9,7 @@ fs.mkdirSync(OUT, { recursive: true });
 (async () => {
   const gas = createGas(DIR + '/Code.gs');
   gas.call('setup');
+  gas.run('TANPA_LOGIN = false'); // uji alur login
   const html = buildPage(DIR);
   const browser = await chromium.launch();
   const errors = [];
@@ -192,6 +193,18 @@ fs.mkdirSync(OUT, { recursive: true });
     const over = await q.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
     ok(nm + ': tidak ada geser horizontal halaman', !over);
     await q.close();
+  }
+  // ===== Mode pengembangan: tanpa login =====
+  {
+    gas.run('TANPA_LOGIN = true');
+    const d = await newPage(1366, 820);
+    await d.waitForSelector('#app:not([hidden])', { timeout: 8000 }); await idle(d);
+    ok('Mode tanpa login: langsung masuk sebagai ADMIN', (await d.textContent('#btnUser')).includes('ADMIN'));
+    await d.click('#btnUser'); await d.selectOption('#devPeran', 'KASIR'); await d.click('#modalBody button:has-text("Ganti peran")');
+    await d.waitForFunction(() => S.user && S.user.peran === 'KASIR', null, { timeout: 8000 }); await idle(d);
+    const tb = await d.$$eval('#nav button', b => b.map(x => x.dataset.tab));
+    ok('Mode tanpa login: ganti peran ke Kasir → hanya POS', tb.join(',') === 'pos', tb.join(','));
+    await d.close();
   }
   await browser.close();
   const errs = errors.filter(e => !/net::ERR_FAILED|ERR_BLOCKED|Failed to load resource/.test(e));

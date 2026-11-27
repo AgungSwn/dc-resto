@@ -59,7 +59,7 @@ Ikuti [docs/PANDUAN_PASANG.md](docs/PANDUAN_PASANG.md). Ringkasnya:
 2. Tempel `src/Code.gs`, lalu buat file HTML `Index`, `Css`, `Js` dari folder `src/`.
 3. Jalankan fungsi `setup` sekali, lalu `pasangTriggerTutupKasir`.
 4. **Terapkan → Deployment baru → Aplikasi web** (Jalankan sebagai: Saya, Akses: Siapa saja).
-5. Login awal: kode **ADM**, PIN **123456**, lalu segera ganti PIN.
+5. Saat ini aplikasi dalam **mode pengembangan**: langsung terbuka tanpa login sebagai Admin (peran bisa diganti dari menu akun). Untuk mengaktifkan login, ubah `TANPA_LOGIN = false` di `src/Code.gs`, terbitkan ulang, lalu masuk dengan kode **ADM**, PIN **123456**.
 
 ### Cara B — dengan clasp (langsung dari repositori)
 

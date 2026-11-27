@@ -14,6 +14,11 @@
 // ===================== KONFIGURASI =====================
 var TZ = 'Asia/Makassar'; // WITA (Bali / Nusa Penida)
 
+// MODE PENGEMBANGAN: true = aplikasi langsung terbuka tanpa login (masuk sebagai ADMIN,
+// peran bisa diganti dari menu akun untuk mencoba tampilan tiap peran).
+// Ubah ke false saat aplikasi siap dipakai, lalu terbitkan ulang (Kelola deployment → Versi baru).
+var TANPA_LOGIN = true;
+
 var SH = {
   AKUN: ['Kode', 'Nama', 'SaldoNormal', 'Pos', 'Golongan', 'Kelompok', 'Aktif'],
   MENU: ['ID', 'Nama', 'Kategori', 'Harga', 'Kelompok', 'Aktif'],
@@ -328,6 +333,16 @@ function login(kode, pin) {
   var token = Utilities.getUuid();
   CacheService.getScriptCache().put('S_' + token, JSON.stringify(user), 21600);
   log_(user, 'LOGIN', {});
+  return { ok: true, data: { token: token, user: user } };
+}
+
+function masukTanpaLogin(peran) {
+  if (!TANPA_LOGIN) return { ok: false, error: 'Mode tanpa login tidak aktif.' };
+  ensureSetup_();
+  peran = PERAN.indexOf(peran) >= 0 ? peran : 'ADMIN';
+  var user = { kode: 'DEV', nama: 'Mode Pengembangan', peran: peran, dev: true };
+  var token = Utilities.getUuid();
+  CacheService.getScriptCache().put('S_' + token, JSON.stringify(user), 21600);
   return { ok: true, data: { token: token, user: user } };
 }
 

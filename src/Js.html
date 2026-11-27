@@ -121,8 +121,15 @@ function tblRows(tableId) {
 var App = {
   init: function () {
     $('loginLogo').innerHTML = logoB(true);
-    try { var t = sessionStorage.getItem('dcr_token'); if (t) { S.token = t; App.start(); return; } } catch (e) { }
     $('loginForm').onsubmit = App.login;
+    $('lgErr').textContent = 'Membuka aplikasi…';
+    google.script.run.withSuccessHandler(function (r) {
+      $('lgErr').textContent = '';
+      if (r && r.ok) { S.dev = true; S.token = r.data.token; App.start(); return; }
+      S.dev = false;
+      try { var t = sessionStorage.getItem('dcr_token'); if (t) { S.token = t; App.start(); } } catch (e) { }
+    }).withFailureHandler(function (e) { $('lgErr').textContent = 'Gagal menghubungi server: ' + (e.message || e); })
+      .masukTanpaLogin(S.devPeran || 'ADMIN');
   },
   login: function (ev) {
     ev.preventDefault();
@@ -142,11 +149,12 @@ var App = {
       App.shell();
       var first = TABS.filter(function (t) { return can(t.need); })[0];
       App.go(first ? first.id : 'pos');
-      if (S.user.kode === 'ADM') UI.toast('Login awal: segera ganti PIN default lewat menu akun.');
+      if (S.dev) UI.toast('Mode pengembangan: tanpa login, sebagai ' + S.user.peran + '.');
+      else if (S.user.kode === 'ADM') UI.toast('Login awal: segera ganti PIN default lewat menu akun.');
     }).catch(function (e) {
       try { sessionStorage.removeItem('dcr_token'); } catch (x) { }
       $('login').hidden = false; $('app').hidden = true; $('loginForm').onsubmit = App.login;
-      if (S.token) $('lgErr').textContent = e.message;
+      $('lgErr').textContent = 'Gagal membuka aplikasi: ' + (e.message || e);
     });
   },
   shell: function () {
@@ -174,9 +182,18 @@ var App = {
     VIEWS[tab]();
   },
   akunSaya: function () {
+    if (S.dev) {
+      UI.open('Mode pengembangan', '<div class="notice">Aplikasi berjalan <b>tanpa login</b>. Untuk mengaktifkan login, ubah <code>TANPA_LOGIN = false</code> di Code.gs lalu terbitkan ulang.</div>' +
+        '<div class="field"><label>Coba tampilan sebagai peran</label><select id="devPeran">' + opt([['ADMIN', 'Admin'], ['SPV', 'Spv'], ['OPERATOR', 'Operator'], ['KASIR', 'Kasir'], ['PEMILIK', 'Pemilik']], S.user.peran) + '</select></div>' +
+        '<div class="modal-foot"><button class="btn" onclick="UI.close()">Tutup</button><button class="btn btn-primary" onclick="App.gantiPeran()">Ganti peran</button></div>');
+      return;
+    }
     UI.open('Akun saya', '<p><b>' + esc(S.user.nama) + '</b> (' + esc(S.user.kode) + ') · ' + esc(S.user.peran) + '</p>' +
       '<h3 style="margin:14px 0 8px;font-size:14px">Ganti PIN</h3><div class="grid2"><div class="field"><label>PIN lama</label><input id="pinL" type="password" inputmode="numeric"></div><div class="field"><label>PIN baru (4–8 angka)</label><input id="pinB" type="password" inputmode="numeric"></div></div>' +
       '<div class="modal-foot"><button class="btn btn-danger" onclick="App.logout()">' + IC.out + ' Keluar</button><button class="btn btn-primary" onclick="App.gantiPin()">Simpan PIN</button></div>');
+  },
+  gantiPeran: function () {
+    S.devPeran = val('devPeran'); S.sub = {}; UI.close(); App.init();
   },
   gantiPin: function () {
     call('gantiPin', { pinLama: val('pinL'), pinBaru: val('pinB') }).then(function (m) { UI.close(); UI.toast(m); }).catch(gagal);
@@ -188,6 +205,7 @@ var App = {
     $('app').hidden = true; $('login').hidden = false; $('lgPin').value = '';
     $('loginForm').onsubmit = App.login;
     if (diam) $('lgErr').textContent = 'Sesi berakhir, silakan login lagi.';
+    if (S.dev) App.init();
   }
 };
 
